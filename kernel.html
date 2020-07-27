@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>kernel.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="introducci%C3%B3n">Introducción</h1>
+<p>El <em>kernel</em> es un componente esencial dentro del sistema operativo ya que se encarga de realizar las interacciones
+entre el sistema operativo y el <em>hardware</em>, entre otras cosas necesarias para el funcionamiento del sistema operativo. Saber configurar el <em>kernel</em> y compilarlo puede brindar beneficios dentro del rendimiento del equipo.</p>
+<h1 id="el-kernel">El <em>kernel</em></h1>
+<p>El <strong>kernel</strong> o núcleo es una pieza fundamental dentro del sistema operativo, ya que este es el encargado de gestionar el hardware y es la pieza fundamental de todo S.O.</p>
+<p>Dentro de los sistemas operativos basados en <em>UNIX</em> que son libres o de código abierto, se tiene acceso al código fuente del <em>kernel</em>, por lo que el usuario puede realizar modificaciones dentro de este, algunos ejemplos son; los <em>kernel</em> de los *BSD, Hurd y Linux, entre otros así como en otros proyectos que no son <em>UNIX</em>.</p>
+<p>Compilar el <em>kernel</em> brinda diferentes beneficios, como menor tamaño y mejor rendimiento, entre otros beneficios dependiendo de la configuración, por lo que proporciona una gran ventaja a diferencia de los <em>kernel</em> de sistemas como Windows, ya que estos son compilados de una manera genérica para que una gran cantidad de dispositivos sean capaces de soportarlo.</p>
+<h2 id="requisitos-para-compilar-el-kernel">Requisitos para compilar el <em>kernel</em></h2>
+<p>Compilar el <em>kernel</em> no es una tarea complicada, ya que no es necesario saber programar, únicamente se requiere crear los binarios a partir del código que ya fue programado por alguien mas. Solo es necesario ejecutar una serie de programas (instrucciones) para tener los componentes necesarios para un núcleo funcional.</p>
+<p>Para lograr realizar dicha tarea es necesario tener un conjunto de paquetes instalados dentro de la distribución GNU/Linux que se esté utilizando, también es necesario contar con el código fuente del <em>kernel</em> y de manera opcional una serie de parches para poder optimizar aún más el <em>kernel</em> para el procesador que se esté usando.</p>
+<p>Requisitos:</p>
+<ul>
+<li>Dependencias para la compilación</li>
+<li>Código fuente del <em>kernel</em></li>
+<li>Archivo de configuración</li>
+<li>Parches de optimización*</li>
+<li>Modprobed*</li>
+</ul>
+<p><sup>*Los requisitos marcados con asterisco [ * ] son opcionales.</sup></p>
+<h3 id="dependencias">Dependencias</h3>
+<p>Para poder empezar con la compilación es necesario tener insataladas las dependencias, ya que brindan las herramientas necesarias para empezar con el proceso. Ya que muchas distribuciones no las incluyen, es necesario instalarlas.<br>
+El proceso de instalación depende de la distribución que se esté utilizando débido a que cada distro cuenta con su propio gestor de paquetes.</p>
+<p>Debian/Ubuntu y derivadas (deb)</p>
+<pre class="hljs"><code><div>$ apt-get install build-essential dpkg-dev git libncurses5-dev bc cpio flex kmod bison flex libssl-dev libelf-dev
+</div></code></pre>
+<p>Fedora y sistemas que usen dnf (Fedora)</p>
+<pre class="hljs"><code><div>$ dnf group install &quot;Development Tools&quot;
+
+$ dnf install ncurses-devel bison flex git elfutils-libelf-devel openssl-devel
+</div></code></pre>
+<p>Sistemas que usen yum (CentOS, RHEL)</p>
+<pre class="hljs"><code><div>$ yum group install &quot;Development Tools&quot; 
+
+$ yum install ncurses-devel bison flex git elfutils-libelf-devel openssl-devel
+</div></code></pre>
+<p>Sistemas basados en Arch</p>
+<pre class="hljs"><code><div>$ pacman -S base-devel bc python git bison bc
+</div></code></pre>
+<p>En distribuciones como Gentoo o que sean similares ya están incluidas estas dependencias. La mayoría de sistemas cuentan con esos paquetes, solo es cuestión de saber el nombre, ya que algunas deciden cambiar el nombre de los paquetes.</p>
+<h3 id="c%C3%B3digo-fuente">Código fuente</h3>
+<p>Después de instalar las dependencias necesarias, es hora de descargar el código fuente del <em>kernel</em>, para ello es necesario ir a la <a href="https://*kernel*.org">página oficial del núcleo de Linux</a>.</p>
+<p>El sitio oficial de Linux no es la única fuente de la cual se puede obtener el <em>kernel</em>, existen diferentes proyectos que se dedican a modificar el núcleo con diferentes propósitos como lo es obtener mayor rendimiento del sistema o simplemente para hacerlo más seguro.</p>
+<ul>
+<li><a href="https://liquorix.net/">Liquorix</a> <em>Kernel</em> con parches de Debian y Zen<em>kernel</em></li>
+<li><a href="https://xanmod.org/">Xanmod</a> <em>Kernel</em> con parches para rendimiento</li>
+<li><a href="https://github.com/zen-*kernel*">Zen <em>Kernel</em></a> <em>Kernel</em> con parches para rendimiento</li>
+</ul>
+<p>En las páginas de los núcleos anteriores brindan paquetes precompilados para &quot;distros&quot; basadas en Debian, aunque también parches o el código fuente del <em>kernel</em> con los parches ya aplicados (se encuentran comprimidos o en su respectivo repo. de GitHub).</p>
+<h3 id="archivo-de-configuraci%C3%B3n">Archivo de configuración</h3>
+<p>El <em>kernel</em> requiere un archivo .config (a la hora de compilar), este archivo es el que indica que drivers, módulos y configuraciones son los que se van a compilar.</p>
+<p>Para obtener este archivo existen dos métodos, el primero es crearlo con</p>
+<pre class="hljs"><code><div>make menuconfig
+</div></code></pre>
+<p>Y hacerlo de manera personalizada, pero es un tema extenso debido a que depende demasiado del hardware, por lo que si se busca un <em>kernel</em> completo, es recomendable usar la configuración actual usando la configuración que ya usa la distribución.</p>
+<p>El archivo se puede encontrar en diferentes ubicaciones dependiendo de la distribución.</p>
+<p>En sistemas como Ubuntu puede encontrarse en el directorio /boot</p>
+<img src="./imagenes/ubuntu_config" alt="drawing" style="width:400px;"/>
+<p>En este caso inicia con config-* por lo que únicamente es necesario copiar alguno de esos archivos, recomendablemente que sea la versión más reciente.</p>
+<p>Por otro lado en la mayoría de distribuciones se encuentra de manera comprimida en /proc esta configuración es la del <em>kernel</em> que actual (el que se está ejecutando).</p>
+<p>Se hablará con más detalle de esto en la preparación de la <a href="#compilaci%C3%B3n-del-kernel">compilación</a>.</p>
+<h3 id="parches-de-optimizaci%C3%B3n">Parches de optimización</h3>
+<p>Existen diferentes parches para optimizar el <em>kernel</em>, ya sea agregando funciones que no están en versiones oficiales por diferentes motivos o configuraciones especiales.</p>
+<p>Cuando se suele compilar el <em>kernel</em> hay una opción que permite al compilador generar código optimizado para el procesador y tener más rendimiento. Las opciones que brinda la configuración son muy reducidas. <a href="#parte-opcional">opcional</a></p>
+<img src="./imagenes/menu_kernel.png" alt="drawing" style="width:400px;"/>
+<p>Como se puede apreciar, las optimizaciones para el procesador están muy límitadas. Cuando se compila un programa por lo general el compilador suele crear binarios con una serie de instrucciones génericas para que puedan ser utilizadas para la mayoría de procesadores sin importar que sean Intel o AMD. Al usarse instrucciones genéricas no se aprovecha completamente el procesador.</p>
+<p>Con el parche a continuación se incluyen más opciones para utilizar instrucciones más específicas para procesadores más recientes, por lo que, el tener un <em>kernel</em> con las instrucciones específicas permite que el núcleo tenga un mayor rendimiento y pueda aprovechar de mejor manera el procesador.</p>
+<p>Para descargar el parche es necesario ir a la página de GitHub del proyecto y clonar el repositorio completo con git.</p>
+<pre class="hljs"><code><div>$ git clone https://github.com/graysky2/kernel_gcc_patch.git
+</div></code></pre>
+<p><sup>*De igual forma, esto se hará en la parte de compilación.</sup></p>
+<h3 id="modprobed-db">Modprobed-db</h3>
+<p><a href="https://wiki.archlinux.org/index.php/Modprobed-db">Modprobed-db</a> es completamente opcional, este programa permite registrar de manera continua los modulos que se están utilizando, esto con la finalidad de únicamente compilar los módulos necesarios y evitar compilar componentes que nunca se utilizarán.</p>
+<p>A pesar de que el proyecto esté mantenido principalmente para Arch Linux, está disponible también para otras plataformas.</p>
+<p>Dentro de esta guía no se hablará más del uso de esta herramienta ya que es muy especifíca y además no se hablará de la configuración del <em>kernel</em>, únicamente de su compilación.</p>
+<h1 id="compilaci%C3%B3n-del-kernel">Compilación del kernel</h1>
+<p>Una vez que se cuente con las dependencias necesarias y el <em>kernel</em>, se puede empezar a preparar el entorno para empezar a compilar.</p>
+<p>A partir de este momento puede variar la forma de compilar, ya que las distribuciones que usen paquetes .deb o .rpm brindan la posibilidad de crear paquetes, así como Gentoo brinda una herramienta especializada en la compilación del <em>kernel</em>.</p>
+<h2 id="compilaci%C3%B3n-gen%C3%A9rica">Compilación genérica</h2>
+<p>Esta forma de compilación funciona en cualquier distro y no depende de ningún gestor de paquetes.</p>
+<p>Una vez que se haya descargado el paquete del kernel, es recomendable tener una carpeta para tener todo de manera más ordenada.</p>
+<pre class="hljs"><code><div>$ mkdir ~/kernel
+$ cd ~/kernel
+</div></code></pre>
+<p>Dentro de la carpeta tiene que estar el <em>kernel</em> comprimido y la carpeta de los parches para la compilación.</p>
+<pre class="hljs"><code><div>$ mv /ubicacion/kernel-comprimido ~/kernel
+$ git clone https://github.com/graysky2/kernel_gcc_patch.git
+</div></code></pre>
+<p>Ahora es necesario descomprimir el kernel de la siguiente manera.</p>
+<pre class="hljs"><code><div>$ tar xpvf linux-*.tar.xz  # en caso de ser el kernel oficial, unicamente cambiar nombres.
+$ cd linux-*/
+</div></code></pre>
+<p>Con las instrucciones ejecutadas anteriormente, se logra descomprimir el código fuente y se cambia al directorio de este mismo, para comprobar se puede ejecutar el programa ' ls '.</p>
+<h3 id="aplicacion-del-parche">Aplicacion del parche</h3>
+<p>Esta parte es completamente opcional, por lo que se puede omitir.</p>
+<p>Si se desea tener un kernel compilado con las instrucciones específicas del procesador que se esté utilizando, es necesario un parche, ya que como se mencionó con anterioridad, el kernel oficial cuenta con optimizaciones muy límitadas.</p>
+<p>Para aplicar el parche es necesario estar dentro del directorio del código fuente, también es recomendable tener el directorio de kernel.</p>
+<pre class="hljs"><code><div>$ patch -p1 ../parche_necesario
+</div></code></pre>
+<img src="./imagenes/kernel_patch.png" alt="drawing" style="width:400px;"/>
+<p>Es muy importante elegir el parche adecuado dependiendo de la versión de gcc o clang que se tenga, así como la versión del kernel, ya que puede ocasionar problemas y romper el proceso.</p>
+<pre class="hljs"><code><div>$ gcc --version # comprobar version de gcc
+</div></code></pre>
+<p>Después de aplicar el parche, es necesario tener el archivo de configuración e iniciar la configuración con <code>make menuconfig</code> esto con el objetivo de seleccionar las opciones en siguiente orden.</p>
+<pre class="hljs"><code><div>`Processor type and features/Processor family`
+</div></code></pre>
+<p>Lo recomendable es elegir la opción adecuada, aunque también se puede elegir la opción de &quot;Native optimizations...&quot; aunque en ciertos procesadores AMD algo antiguos puede romper el proceso de compilación.
+Finalmente es necesario guardar.</p>
+<pre class="hljs"><code><div>$ gcc -march=native -E -v - &lt;/dev/null 2&gt;&amp;1 | grep &quot;\-march=&quot; 
+</div></code></pre>
+<p><sup>GCC permite determinar la familia del procesador, se mostrara con rojo si se ejecuta la línea mencionada</sup></p>
+<h3 id="compilaci%C3%B3n">Compilación</h3>
+<p>Para comenzar con la compilación es necesario usar la <a href="#archivo-de-configuraci%C3%B3n">configuración</a> que es necesaria para compilar.</p>
+<pre class="hljs"><code><div>$ make clean &amp;&amp; make mrproper # necesario para preparar el kernel, si se ejecuta después de copiar la config. se borrara
+</div></code></pre>
+<pre class="hljs"><code><div>$ cp /boot/configuration .config # si se encuentra en /boot
+$ zcat /proc/config.gz &gt; .config # si se encuentra en /proc 
+</div></code></pre>
+<p>En la mayoría de distribuciones el archivo de configuración se encuentra en proc. El comando anterior copia ese archivo dentro del directorio local, por lo que es <strong>importante estar en el directorio del código fuente del kernel</strong>.</p>
+<p>Si ya se seleccionó la familia del procesador (en caso de que se haya decidido hacer) ya se puede empezar con la compilación.</p>
+<pre class="hljs"><code><div>$ make oldconfig
+$ make prepare
+$ make -j$(nproc) # compila con todos los núcleos del proc.
+$ make -j$(nproc) modules # compila los módulos
+</div></code></pre>
+<p>Con los comandos anteriores se compila el kernel y los módulos, con esto ya únicamente es necesario instalarlo.</p>
+<pre class="hljs"><code><div>$ sudo make install  # instala el kernel
+$ sudo make modules_install
+</div></code></pre>
+<p>Finalmente solo queda actualizar el GRUB para que se pueda elegir el nuevo kernel dentro del próximo inicio del ordenador.</p>
+<pre class="hljs"><code><div>$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+</div></code></pre>
+<p>Ahora únicamente queda reiniciar el equipo para elegir el nuevo kernel.</p>
+<h2 id="compilaci%C3%B3n-estilo-debianubuntu">Compilación estilo Debian/Ubuntu</h2>
+<p>El proceso de compilación es bastante similar al genérico, la diferencia es que se puede crear varios paquetes .deb para su instalación. Se debe seguir el mismo proceso hasta la parte de donde se termina de copiar el archivo .config.</p>
+<p>Una vez que se tenga el archivo .config dentro del directorio, es necesario abrirlo con un editor de texto, es <strong>RECOMENDABLE USAR UN EDITOR DE TEXTO QUE PERMITA HACER BUSQUEDAS</strong>.</p>
+<pre class="hljs"><code><div>CONFIG_DEBUG_INFO=n
+</div></code></pre>
+<p>Dentro del archivo .config es muy importante buscar esa línea y cambiar la 'y' por una 'n', si no se cambia, el proceso de compilación podría tardar el doble y generar paquetes demasiado pesados.</p>
+<p>Ahora para empezar con el proceso de compilación y crear el paquete es el siguiente.</p>
+<pre class="hljs"><code><div>make oldconfig &amp;&amp; make prepare
+make -j$(nproc) deb-pkg
+</div></code></pre>
+<p>Creará varios archivos .deb que se deberán instalar uno por uno, que para ello se puede usar dpkg -i.</p>
+<p>Y finalmente será necesario actualizar el GRUB de la misma forma que se muestra en el apartado de compilación genérica.</p>
+<pre class="hljs"><code><div>sudo grub-mkconfig -o /boot/grub/grub.cfg
+</div></code></pre>
+
+</body>
+</html>
